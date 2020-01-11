@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_USER_MODEL = 'users.User'
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'location_field.apps.DefaultConfig',
-    'django.contrib.gis'
     'ticket',
     'users',
-    'event'
+    'event',
+    'location_field.apps.DefaultConfig',
+    'django.contrib.gis'
 
 ]
 
