@@ -36,12 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cleanup',
     'ticket',
     'users',
     'event',
     'partners',
     'location_field.apps.DefaultConfig',
-    'django.contrib.gis'
+    'django.contrib.gis',
 
 ]
 
