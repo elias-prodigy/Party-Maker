@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'ticket',
     'users',
     'event',
+    'partners',
     'location_field.apps.DefaultConfig',
     'django.contrib.gis'
 
@@ -81,14 +82,12 @@ WSGI_APPLICATION = 'Party_maker.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-                'NAME': 'party',
-                'USER': 'mikl',
-                'PASSWORD': 'qwaszx',
-                'HOST': 'localhost',
-                'PORT': '5432'
+        'NAME': 'party',
+        'USER': 'elias',
+        'PASSWORD': 'abcd1234',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -132,6 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOCATION_FIELD = {
-    'search.provider': 'google',
+    'map.provider': 'openstreetmap',
+    'search.provider': 'nominatim'
 }
 
