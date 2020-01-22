@@ -1,9 +1,9 @@
 img {
-  border: 3px solid #282c34;
+  border: 3px solid #ac2925;
 }
 .container-fluid {
   height: 100vh;
-  background-color: #282c34;
+  background-color: #ac2925;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -20,6 +20,7 @@ from all_authentication import views
 
 urlpatterns = [
     path("", views.home, name="home"),
+    path('partners/', include('partners.urls')),
     path('event/', include('event.urls')),
     path('admin/', admin.site.urls),
     # path('login/', views.login, name='login'),
