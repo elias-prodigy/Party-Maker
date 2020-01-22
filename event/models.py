@@ -1,6 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from location_field.models.spatial import LocationField
+from partners.models import Partners
 
 
 class Place(models.Model):
@@ -12,13 +13,22 @@ class Place(models.Model):
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
+    event_name = models.CharField(max_length=200)
+    event_description = models.TextField(null=True, blank=True)
     location_ev = models.ForeignKey(Place, on_delete=models.DO_NOTHING)
     date = models.DateField()
+    visitors = models.ManyToManyField(Partners, through='PartyRegPartners')
+    event_image = models.ImageField(upload_to='uploads/', null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.event_name
+
+
+class PartyRegPartners(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    partner = models.ForeignKey(Partners, on_delete=models.CASCADE)
+    is_visited = models.BooleanField(null=True, blank=True)
+
 
 #
 # class ShopAdmin(OSMGeoAdmin):

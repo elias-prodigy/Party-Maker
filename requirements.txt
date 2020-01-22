@@ -4,6 +4,7 @@ chardet==3.0.4
 Click==7.0
 defusedxml==0.6.0
 Django==3.0.2
+django-crispy-forms==1.8.1
 django-location-field==2.1.0
 Flask==1.1.1
 geos==0.2.2
@@ -27,3 +28,5 @@ social-auth-core==3.2.0
 sqlparse==0.3.0
 urllib3==1.25.7
 Werkzeug==0.16.0
+django-cleanup==4.0.0
+
