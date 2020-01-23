@@ -10,7 +10,36 @@
     </head>
     <body>
         <h1>The list of partners</h1>
-        <p>Когда нибудь тут будет таблица со списком партнеров</p>
+        <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date added</th>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Sponsor</th>
+              <th scope="col">Manager name</th>
+              <th scope="col">Approved by manager</th>
+              <th scope="col">Approved by CEO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for partner in partners_list %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ partner.date_add }}</td>
+                  <td>{{ partner.name }}</td>
+                  <td>{{ partner.surname }}</td>
+                  <td>{{ partner.email }}</td>
+                  <td>{{ partner.sponsor }}</td>
+                  <td>{{ partner.manager_name }}</td>
+                  <td>{{ partner.manager_approve }}</td>
+                  <td>{{ partner.CEO_approve }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+         </table>
         <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
     </body>
 </html>

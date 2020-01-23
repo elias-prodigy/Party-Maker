@@ -8,7 +8,6 @@ class List_of_partners(forms.ModelForm):
 
 
 class CreatePartner(forms.ModelForm):
-
     class Meta:
         model = Partners
         fields = ('name', 'surname', 'email', 'sponsor', 'manager_name')

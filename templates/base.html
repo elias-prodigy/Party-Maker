@@ -22,21 +22,18 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-              </li>
               {% if user.is_authenticated %}
                  <li class="navbar-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Events
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                      <a class="dropdown-item" href="{% url 'event-list' %}">show events</a>
-                      <a class="dropdown-item" href="#">create event</a>
+                      <a class="dropdown-item" href="{% url 'event-list' %}">Show events</a>
+                      <a class="dropdown-item" href="#">Create event</a>
                     </div>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Partners</a>
+                    <a class="nav-link" href={% url 'partners' %}>Partners</a>
                   </li>
               {% else %}
                 <li class="nav-item">
@@ -63,16 +60,15 @@
           </div>
       </div>
     </nav>
-      <div class="container">
-
-        <div>
-            <h1 class="text-white text-center"></h1>
-            <div class="card p-5">
-                {% block content %}
-                {% endblock %}
-            </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <hr class="mt-0 mb-4">
+          {% block content %}
+          {% endblock %}
         </div>
       </div>
+    </div>
 
 </body>
 </html>

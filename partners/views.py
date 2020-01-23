@@ -1,12 +1,16 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.views.generic import ListView
+from .models import Partners
+
 from .forms import CreatePartner
 from django.utils import timezone
-# Create your views here.
 
 
-def partners_list(request):
-    return render(request, 'partners/partners.html', {})
+class PartnersList(ListView):
+
+    model = Partners
+    template_name = 'partners/partners.html'
 
 
 def create_partner(request):
@@ -14,7 +18,6 @@ def create_partner(request):
         form = CreatePartner(request.POST)
         if form.is_valid():
             partner = form.save()
-            partner.published_date = timezone.now()
             partner.save()
             return redirect('created_new_partner')
             """, pk=partner.pk - добавить в скобки, в предыдущую строку, чтобы задать каждому 
