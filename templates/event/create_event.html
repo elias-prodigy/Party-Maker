@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>Create Event</h1>
          <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-
-                 <h1>Event form</h1>
+            <div class="col-6">
+                 <h1>Create Event</h1>
                  {{ form|crispy }}
                  <button type="submit" class="save btn btn-success">Save Event</button>
-
+            </div>
          </form>
 
 {% endblock %}
