@@ -1,18 +1,14 @@
 {% extends 'base.html' %}
-
+{% block title %}
+    Our partners
+{% endblock %}
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Our partners</title>
-    </head>
-    <body>
         <h1>The list of partners</h1>
-        <table class="table table-striped table-dark">
-          <thead>
+        <table class="table">
+          <thead class="thead-dark">
             <tr>
+              <th scope="col" >Select</th>
               <th scope="col">#</th>
               <th scope="col">Date added</th>
               <th scope="col">Name</th>
@@ -27,6 +23,7 @@
           <tbody>
             {% for partner in partners_list %}
                 <tr>
+                  <td><input type="checkbox"></td>
                   <td>{{ forloop.counter }}</td>
                   <td>{{ partner.date_add }}</td>
                   <td>{{ partner.name }}</td>
@@ -41,7 +38,5 @@
           </tbody>
          </table>
         <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
-    </body>
-</html>
 
 {% endblock %}
