@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{{event}}
+{% block content %}
+{{event}}
+<br>
+<img <img src="{{MEDIA_URL}}{{event.event_image}}" width="150" height="150" align="bottom"/>
+<p>{{event.event_description}}</p>
+{% endblock %}

@@ -18,7 +18,7 @@ class Event(models.Model):
     location_ev = models.ForeignKey(Place, on_delete=models.DO_NOTHING)
     date = models.DateField()
     visitors = models.ManyToManyField(Partners, through='PartyRegPartners')
-    event_image = models.ImageField(upload_to='uploads/', null=True, blank=True)
+    event_image = models.ImageField(upload_to='', null=True, blank=True)
 
     def __str__(self):
         return self.event_name
