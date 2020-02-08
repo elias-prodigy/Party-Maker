@@ -31,7 +31,3 @@ class PartyRegPartners(models.Model):
     manager_approve = models.BooleanField(default=False)
     CEO_approve = models.BooleanField(default=False)
 
-
-#
-# class ShopAdmin(OSMGeoAdmin):
-#     list_display = ('name', 'location')

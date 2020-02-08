@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Partners(models.Model):
@@ -11,3 +12,9 @@ class Partners(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.surname} {self.manager_name}"
+
+    def get_absolute_url_delete(self):
+        return reverse('delete_partners', kwargs={'pk': self.pk})
+
+    def get_absolute_url_update(self):
+        return reverse('update_partners', kwargs={'pk': self.pk})
