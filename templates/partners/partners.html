@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+<<<<<<< HEAD
 {% load django_tables2 %}
 {% load crispy_forms_tags %}
 
+=======
+>>>>>>> new_db
 {% block title %}
     Our partners
 {% endblock %}
@@ -50,6 +53,45 @@
     </div>
   </div>
 </div>
+    <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+        <div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
+                        <div class="form-group" >
+                            <label for="chouseEvent">Event select</label>
+                            <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+                                <option>choose your event</option>
+                                {% for even in event %}
+                                  <option data-event-id="{{even.pk}}">{{even}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div align="right">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Send email to partners
+                </button>
+            </div>
+            <p>{{event.id}}</p>
+        </div>
     <script>
         $(document).ready(function(){
           var token = '{{csrf_token}}';
@@ -94,61 +136,7 @@
             });
         })
     </script>
-    <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+        {% block scripts %}
+            <script src = "{% static 'js/form_send_email.js' %}"></script>
+        {% endblock %}
 {% endblock content %}
-
-{#{% block head %}#}
-{#<link rel="stylesheet" href="{% static 'css/partner_table.css' %}" />#}
-{#<script type="text/javascript" src="partners_table.js"></script>#}
-{#{% endblock %}#}
-
-{#{% block title %}#}
-{#    Our partners#}
-{#{% endblock %}#}
-{##}
-{#{% block content %}#}
-{#<script src="/static/JS/bootstable.js"></script>#}
-{##}
-{##}
-{#<div class="card">#}
-{#  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">The list of partners</h3>#}
-{#  <div class="card-body">#}
-{#    <div id="table" class="table-editable">#}
-{#      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i#}
-{#            class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>#}
-{#       <table class="table table-bordered table-responsive-md table-striped text-center">#}
-{#        <thead>#}
-{#          <tr>#}
-{#              <th class="text-center" scope="col" >Select</th>#}
-{#              <th class="text-center" scope="col">#</th>#}
-{#              <th class="text-center" scope="col">Date added</th>#}
-{#              <th class="text-center" scope="col">Name</th>#}
-{#              <th class="text-center" scope="col">Surname</th>#}
-{#              <th class="text-center" scope="col">Email</th>#}
-{#              <th class="text-center" scope="col">Sponsor</th>#}
-{#              <th class="text-center" scope="col">Manager name</th>#}
-{#          </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#            {% for partner in partners_list %}#}
-{#                <tr>#}
-{#                  <td><input type="checkbox"></td>#}
-{#                  <td>{{ forloop.counter }}</td>#}
-{#                  <td>{{ partner.date_add }}</td>#}
-{#                  <td class="pt-3-half" contenteditable="true">{{ partner.name }}</td>#}
-{#                  <td>{{ partner.surname }}</td>#}
-{#                  <td>{{ partner.email }}</td>#}
-{#                  <td>{{ partner.sponsor }}</td>#}
-{#                  <td>{{ partner.manager_name }}</td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
-{#         </tbody>#}
-{#       </table>#}
-{#        <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>#}
-{#    <script>$('table').SetEditable();</script>#}
-{#    </div>#}
-{#  </div>#}
-{#</div>#}
-{#{% endblock %}#}
-
-

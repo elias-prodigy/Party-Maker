@@ -6,6 +6,7 @@ from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django_tables2 import SingleTableView
 from .models import Partners
+from event.models import Event
 from .forms import CreatePartner
 from .tables import PartnerTable
 
@@ -15,6 +16,13 @@ class PartnersList(SingleTableView):
     model = Partners
     table_class = PartnerTable
     template_name = 'partners/partners.html'
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['event'] = Event.objects.all()
+        return context
 
 
 class PartnerCreation(CreateView):
@@ -45,9 +53,4 @@ class UpdatePartners(UpdateView):
 
     model = Partners
     fields = ['name', 'surname', 'sponsor', 'manager_name']
-    # form_class = CreatePartner
-    # template_name = 'partners/update_partner.html'
     success_url = '/partners/'
-
-    # def get_success_url(self):
-    #     return reverse('update_partners')
