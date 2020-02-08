@@ -28,6 +28,8 @@ class PartyRegPartners(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     partner = models.ForeignKey(Partners, on_delete=models.CASCADE)
     is_visited = models.BooleanField(null=True, blank=True)
+    manager_approve = models.BooleanField(default=False)
+    CEO_approve = models.BooleanField(default=False)
 
 
 #

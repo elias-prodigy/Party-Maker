@@ -3,7 +3,7 @@ from .models import Partners
 
 
 class PartnersAdmin(admin.ModelAdmin):
-    list_display = ('name', 'surname', 'manager_name', "manager_approve", 'CEO_approve')
+    list_display = ('name', 'surname', 'manager_name')
 
     def partner_info(self, obj):
         return obj.description

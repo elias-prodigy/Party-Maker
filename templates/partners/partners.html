@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     Our partners
 {% endblock %}
@@ -16,8 +17,7 @@
               <th scope="col">Email</th>
               <th scope="col">Sponsor</th>
               <th scope="col">Manager name</th>
-              <th scope="col">Approved by manager</th>
-              <th scope="col">Approved by CEO</th>
+
             </tr>
           </thead>
           <tbody>
@@ -31,12 +31,51 @@
                   <td>{{ partner.email }}</td>
                   <td>{{ partner.sponsor }}</td>
                   <td>{{ partner.manager_name }}</td>
-                  <td>{{ partner.manager_approve }}</td>
-                  <td>{{ partner.CEO_approve }}</td>
+
                 </tr>
             {% endfor %}
           </tbody>
          </table>
-        <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+        <a class="btn btn-primary" href="{% url 'partner_new' %}" align="right">Create new partner</a>
+        <div>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
+                        <div class="form-group" >
+                            <label for="chouseEvent">Event select</label>
+                            <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+                                <option>choose your event</option>
+                                {% for even in event %}
+                                  <option data-event-id="{{even.pk}}">{{even}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <div align="right">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Send email to partners
+                </button>
+            </div>
+            <p>{{event.id}}</p>
+        </div>
+        {% block scripts %}
+            <script src = "{% static 'js/form_send_email.js' %}"></script>
+        {% endblock %}
 {% endblock %}

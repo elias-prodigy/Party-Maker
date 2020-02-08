@@ -161,3 +161,11 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+# smtp for gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'LastaYaya@gmail.com'
+EMAIL_HOST_PASSWORD = 'LastFm22'
+EMAIL_PORT = 587
