@@ -29,7 +29,3 @@ class PartyRegPartners(models.Model):
     partner = models.ForeignKey(Partners, on_delete=models.CASCADE)
     is_visited = models.BooleanField(null=True, blank=True)
 
-
-#
-# class ShopAdmin(OSMGeoAdmin):
-#     list_display = ('name', 'location')

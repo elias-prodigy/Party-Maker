@@ -1,42 +1,154 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+
 {% block title %}
     Our partners
 {% endblock %}
+
 {% block content %}
+{% render_table table %}
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit partner info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
-        <h1>The list of partners</h1>
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col" >Select</th>
-              <th scope="col">#</th>
-              <th scope="col">Date added</th>
-              <th scope="col">Name</th>
-              <th scope="col">Surname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Sponsor</th>
-              <th scope="col">Manager name</th>
-              <th scope="col">Approved by manager</th>
-              <th scope="col">Approved by CEO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for partner in partners_list %}
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ partner.date_add }}</td>
-                  <td>{{ partner.name }}</td>
-                  <td>{{ partner.surname }}</td>
-                  <td>{{ partner.email }}</td>
-                  <td>{{ partner.sponsor }}</td>
-                  <td>{{ partner.manager_name }}</td>
-                  <td>{{ partner.manager_approve }}</td>
-                  <td>{{ partner.CEO_approve }}</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-         </table>
-        <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+      <div class="modal-body">
+          <form method="POST" id="update_partner" class="post-form" action="">{% csrf_token %}
+                <div class="form-group">
+                    Name: <label>
+                    <input type="text" class="form-control mb-3" name="name">
+                </label>
+                </div>
+                <div class="form-group">
+                    Surname: <label>
+                    <input type="text" class="form-control mb-3" name="surname">
+                </label>
+                </div>
+                <div class="form-group">
+                    Sponsor: <label>
+                    <input type="text" class="form-control mb-3" name="sponsor">
+                </label>
+                </div>
+                <div class="form-group">
+                    Manager Name: <label>
+                    <input type="text" class="form-control mb-3" name="manager_name">
+                </label>
+                </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary save">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script>
+        $(document).ready(function(){
+          var token = '{{csrf_token}}';
 
-{% endblock %}
+          $("button.js-delete").click(function(){
+            $.ajax({
+                    headers: { "X-CSRFToken": token },
+                    type: 'DELETE',
+                    url: $(this).attr('delete-link'),
+                    success: $(this).parents("tr").remove()
+                    });
+          });
+
+          $("button.js-update").click(function() {
+              var name = $(this).parents('tr').find('td[class="name"]').text();
+              $('input[name="name"]').val(name);
+              var surname = $(this).parents('tr').find('td[class="surname"]').text();
+              $('input[name="surname"]').val(surname);
+              var sponsor = $(this).parents('tr').find('td[class="sponsor"]').text();
+              $('input[name="sponsor"]').val(sponsor);
+              var manager_name = $(this).parents('tr').find('td[class="manager_name"]').text();
+              $('input[name="manager_name"]').val(manager_name)
+              var partner_url = $(this).attr('update_link');
+              $('#update_partner').attr('action', partner_url)
+          });
+
+          $('#update_partner').on('submit', function (event) {
+              event.preventDefault();
+               $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function () {
+                        location.reload();
+                    }
+               });
+          });
+
+          $("button.save").click(function() {
+              $('#update_partner').submit();
+
+            });
+        })
+    </script>
+    <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+{% endblock content %}
+
+{#{% block head %}#}
+{#<link rel="stylesheet" href="{% static 'css/partner_table.css' %}" />#}
+{#<script type="text/javascript" src="partners_table.js"></script>#}
+{#{% endblock %}#}
+
+{#{% block title %}#}
+{#    Our partners#}
+{#{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<script src="/static/JS/bootstable.js"></script>#}
+{##}
+{##}
+{#<div class="card">#}
+{#  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">The list of partners</h3>#}
+{#  <div class="card-body">#}
+{#    <div id="table" class="table-editable">#}
+{#      <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i#}
+{#            class="fas fa-plus fa-2x" aria-hidden="true"></i></a></span>#}
+{#       <table class="table table-bordered table-responsive-md table-striped text-center">#}
+{#        <thead>#}
+{#          <tr>#}
+{#              <th class="text-center" scope="col" >Select</th>#}
+{#              <th class="text-center" scope="col">#</th>#}
+{#              <th class="text-center" scope="col">Date added</th>#}
+{#              <th class="text-center" scope="col">Name</th>#}
+{#              <th class="text-center" scope="col">Surname</th>#}
+{#              <th class="text-center" scope="col">Email</th>#}
+{#              <th class="text-center" scope="col">Sponsor</th>#}
+{#              <th class="text-center" scope="col">Manager name</th>#}
+{#          </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for partner in partners_list %}#}
+{#                <tr>#}
+{#                  <td><input type="checkbox"></td>#}
+{#                  <td>{{ forloop.counter }}</td>#}
+{#                  <td>{{ partner.date_add }}</td>#}
+{#                  <td class="pt-3-half" contenteditable="true">{{ partner.name }}</td>#}
+{#                  <td>{{ partner.surname }}</td>#}
+{#                  <td>{{ partner.email }}</td>#}
+{#                  <td>{{ partner.sponsor }}</td>#}
+{#                  <td>{{ partner.manager_name }}</td>#}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#         </tbody>#}
+{#       </table>#}
+{#        <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>#}
+{#    <script>$('table').SetEditable();</script>#}
+{#    </div>#}
+{#  </div>#}
+{#</div>#}
+{#{% endblock %}#}
+
+
