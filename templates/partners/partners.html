@@ -1,42 +1,108 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+
 {% block title %}
     Our partners
 {% endblock %}
+
 {% block content %}
 
-        <h1>The list of partners</h1>
-        <table class="table">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col" >Select</th>
-              <th scope="col">#</th>
-              <th scope="col">Date added</th>
-              <th scope="col">Name</th>
-              <th scope="col">Surname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Sponsor</th>
-              <th scope="col">Manager name</th>
-              <th scope="col">Approved by manager</th>
-              <th scope="col">Approved by CEO</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for partner in partners_list %}
-                <tr>
-                  <td><input type="checkbox"></td>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ partner.date_add }}</td>
-                  <td>{{ partner.name }}</td>
-                  <td>{{ partner.surname }}</td>
-                  <td>{{ partner.email }}</td>
-                  <td>{{ partner.sponsor }}</td>
-                  <td>{{ partner.manager_name }}</td>
-                  <td>{{ partner.manager_approve }}</td>
-                  <td>{{ partner.CEO_approve }}</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-         </table>
-        <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
+<div class="form-group" >
+    <label for="chouseEvent">Event select</label>
+    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+        <option>Choose your event</option>
+        {% for even in event %}
+          <option data-event-id="{{even.pk}}">{{even}}</option>
+        {% endfor %}
+    </select>
+</div>
 
+{#{% else %}    #}
+{% render_table table %}
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit partner info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+          <form method="POST" id="update_partner" class="post-form" action="">{% csrf_token %}
+                <div class="form-group">
+                    Name: <label>
+                    <input type="text" class="form-control mb-3" name="name">
+                </label>
+                </div>
+                <div class="form-group">
+                    Surname: <label>
+                    <input type="text" class="form-control mb-3" name="surname">
+                </label>
+                </div>
+                <div class="form-group">
+                    Sponsor: <label>
+                    <input type="text" class="form-control mb-3" name="sponsor">
+                </label>
+                </div>
+                <div class="form-group">
+                    Manager Name: <label>
+                    <input type="text" class="form-control mb-3" name="manager_name">
+                </label>
+                </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary save">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
+                <div class="form-group" >
+                    <label for="chouseEvent">Event select</label>
+                    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+                        <option>choose your event</option>
+                        {% for even in event %}
+                          <option data-event-id="{{even.pk}}">{{even}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Send email to partners
+        </button>
+        <a class="btn btn-primary" href="{% url 'partner_new' %}" >
+            Create new partner
+        </a>
+    </div>
+</div>
+
+{% block scripts %}
+    <script src = "{% static 'js/form_send_email.js' %}"></script>
 {% endblock %}
+{% endblock content %}

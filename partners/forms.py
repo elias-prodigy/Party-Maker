@@ -8,3 +8,5 @@ class CreatePartner(forms.ModelForm):
         model = Partners
         fields = ('name', 'surname', 'email', 'sponsor', 'manager_name')
 
+
+

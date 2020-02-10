@@ -53,11 +53,13 @@ INSTALLED_APPS = [
     'social_django',
     'all_authentication',
     'crispy_forms',
-
+    'django_tables2'
 
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -161,3 +163,11 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+# smtp for gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'LastaYaya@gmail.com'
+EMAIL_HOST_PASSWORD = 'LastFm22'
+EMAIL_PORT = 587

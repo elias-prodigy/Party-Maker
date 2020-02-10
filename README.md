@@ -1,4 +1,5 @@
 # Party-maker
+Party managing website 
 This web app can serve to different sizes businesses, to help them organize any types of events: meetups, parties, teambuildings etc.
 
 The main functionality of this app is:
