@@ -1,16 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
-<<<<<<< HEAD
 {% load django_tables2 %}
 {% load crispy_forms_tags %}
 
-=======
->>>>>>> new_db
 {% block title %}
     Our partners
 {% endblock %}
 
 {% block content %}
+
+<div class="form-group" >
+    <label for="chouseEvent">Event select</label>
+    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+        <option>Choose your event</option>
+        {% for even in event %}
+          <option data-event-id="{{even.pk}}">{{even}}</option>
+        {% endfor %}
+    </select>
+</div>
+
+{#{% else %}    #}
 {% render_table table %}
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -53,90 +62,47 @@
     </div>
   </div>
 </div>
-    <a class="btn btn-primary" href={% url "partner_new" %} >Create new partner</a>
-        <div>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                      <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
-                        <div class="form-group" >
-                            <label for="chouseEvent">Event select</label>
-                            <select class="form-control" id="chouseEvent" onchange='myFunction()'>
-                                <option>choose your event</option>
-                                {% for even in event %}
-                                  <option data-event-id="{{even.pk}}">{{even}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                      </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
-                  </div>
+<div>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
+                <div class="form-group" >
+                    <label for="chouseEvent">Event select</label>
+                    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
+                        <option>choose your event</option>
+                        {% for even in event %}
+                          <option data-event-id="{{even.pk}}">{{even}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
-              </div>
-            </div>
-
-            <div align="right">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                    Send email to partners
-                </button>
-            </div>
-            <p>{{event.id}}</p>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
+          </div>
         </div>
-    <script>
-        $(document).ready(function(){
-          var token = '{{csrf_token}}';
+      </div>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            Send email to partners
+        </button>
+        <a class="btn btn-primary" href="{% url 'partner_new' %}" >
+            Create new partner
+        </a>
+    </div>
+</div>
 
-          $("button.js-delete").click(function(){
-            $.ajax({
-                    headers: { "X-CSRFToken": token },
-                    type: 'DELETE',
-                    url: $(this).attr('delete-link'),
-                    success: $(this).parents("tr").remove()
-                    });
-          });
-
-          $("button.js-update").click(function() {
-              var name = $(this).parents('tr').find('td[class="name"]').text();
-              $('input[name="name"]').val(name);
-              var surname = $(this).parents('tr').find('td[class="surname"]').text();
-              $('input[name="surname"]').val(surname);
-              var sponsor = $(this).parents('tr').find('td[class="sponsor"]').text();
-              $('input[name="sponsor"]').val(sponsor);
-              var manager_name = $(this).parents('tr').find('td[class="manager_name"]').text();
-              $('input[name="manager_name"]').val(manager_name)
-              var partner_url = $(this).attr('update_link');
-              $('#update_partner').attr('action', partner_url)
-          });
-
-          $('#update_partner').on('submit', function (event) {
-              event.preventDefault();
-               $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function () {
-                        location.reload();
-                    }
-               });
-          });
-
-          $("button.save").click(function() {
-              $('#update_partner').submit();
-
-            });
-        })
-    </script>
-        {% block scripts %}
-            <script src = "{% static 'js/form_send_email.js' %}"></script>
-        {% endblock %}
+{% block scripts %}
+    <script src = "{% static 'js/form_send_email.js' %}"></script>
+{% endblock %}
 {% endblock content %}

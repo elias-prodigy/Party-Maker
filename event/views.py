@@ -53,6 +53,3 @@ class EventSendEmail(View):
 class EventDelete(DeleteView):
     model = Event
     success_url = reverse_lazy('event-list')
-
-
-
