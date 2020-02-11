@@ -1,7 +1,5 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.shortcuts import redirect
-from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django_tables2 import SingleTableView

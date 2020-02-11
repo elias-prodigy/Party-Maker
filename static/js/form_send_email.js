@@ -10,6 +10,7 @@ $('#myModal').on('shown.bs.modal', function () {
 //    });
 
 function myFunction(){
+    var x = 0
     var x =$("#chouseEvent option:selected").attr("data-event-id");
 //     document.getElementById("chouseEvent").attr("data-event-id");
 
