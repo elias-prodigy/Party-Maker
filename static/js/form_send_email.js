@@ -5,6 +5,7 @@ function ChangeTableFunction(){
 };
 
 function myFunction(){
+
     var x = $("#chouseEvent option:selected").attr("data-event-id");
     var act = $('#for_mail').attr('action').replace("0",x);
     var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
