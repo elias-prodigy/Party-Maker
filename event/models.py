@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from django.urls import reverse
 from location_field.models.spatial import LocationField
 from partners.models import Partners
 

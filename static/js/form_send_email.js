@@ -1,11 +1,11 @@
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
-});
-
+function ChangeTableFunction(){
+    var x = $("#main_choose_event option:selected").attr("data-id-of-event");
+    var act = $('#for_partner_event_table').attr('action').replace("0",x);
+    window.location = act;
+};
 
 function myFunction(){
-    var x =$("#chouseEvent option:selected").attr("data-event-id");
-    $('#send_m').click(function () {
+    var x = $("#chouseEvent option:selected").attr("data-event-id");
     var act = $('#for_mail').attr('action').replace("0",x);
     var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
@@ -14,13 +14,32 @@ function myFunction(){
         type: 'POST',
         data: {},
         headers: {'X-CSRFToken': csrftoken},
-        });
     });
 }
 
 
+//function SendTicketFunction(){
+//    var x =$("#main_choose_event option:selected").attr("data-event-id");
+//    $('#send_ticket').click(function () {
+////    var act = $('#for_mail').attr('action').replace("0",x);
+//    var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+//
+//    $.ajax({
+//        url: $(this).attr('x'),
+//        type: 'POST',
+//        data: {},
+//        headers: {'X-CSRFToken': csrftoken},
+//        });
+//    });
+//};
+
+
 $(document).ready(function(){
-  var token = '{{csrf_token}}';
+  var token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+  $('#main_choose_event').change(function() {
+    ChangeTableFunction()
+    });
 
   $("button.js-delete").click(function(){
     $.ajax({
@@ -39,9 +58,17 @@ $(document).ready(function(){
       var sponsor = $(this).parents('tr').find('td[class="sponsor"]').text();
       $('input[name="sponsor"]').val(sponsor);
       var manager_name = $(this).parents('tr').find('td[class="manager_name"]').text();
-      $('input[name="manager_name"]').val(manager_name)
+      $('input[name="manager_name"]').val(manager_name);
+
+
+      var check_site = $("button.js-update").parents('tr').find('td[class="manager_approve"]').is(":checked")
+      var check_modal = $('input[name="modal_manager_approve"]').is(":checked")
+      check_modal = check_site
+
+
       var partner_url = $(this).attr('update_link');
-      $('#update_partner').attr('action', partner_url)
+      $('#update_partner').attr('action', partner_url);
+
   });
 
   $('#update_partner').on('submit', function (event) {
@@ -56,8 +83,12 @@ $(document).ready(function(){
        });
   });
 
-  $("button.save").click(function() {
+  $("button#update").click(function() {
       $('#update_partner').submit();
 
-    });
+  });
+
+  $("button#send_m").click(function() {
+    myFunction();
+  });
 });

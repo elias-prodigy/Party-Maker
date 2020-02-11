@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    Our partners
+    Partners registered to the party
 {% endblock %}
 
 {% block content %}
@@ -52,6 +52,16 @@
                     <input type="text" class="form-control mb-3" name="manager_name">
                 </label>
                 </div>
+                <div class="form-group">
+                    Manager Approve: <label>
+                    <input type="checkbox" name="modal_manager_approve">
+                </label>
+                </div>
+                <div class="form-group">
+                    CEO Approve: <label>
+                    <input type="checkbox" name="modal_CEO_approve">
+                </label>
+                </div>
           </form>
       </div>
       <div class="modal-footer">
@@ -61,44 +71,15 @@
     </div>
   </div>
 </div>
-<div>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Choose event for email</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-              <form id="for_mail" action="{% url 'send-email' 0 %}">
-                  {% csrf_token %}
-                <div class="form-group" >
-                    <label for="chouseEvent">Event select</label>
-                    <select class="form-control" id="chouseEvent">
-                        <option>Choose your event</option>
-                        {% for even in event %}
-                          <option data-event-id="{{even.pk}}">{{even}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-              </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" id="send_m" class="btn btn-success" data-dismiss="modal">Send email</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Send email to partners
-        </button>
-    </div>
-</div>
 
+<div>
+    <button type="button" id="send_ticket" class="btn btn-primary">
+            Send tickets
+    </button>
+    <a class="btn btn-primary add_partner" href="{% url 'partner_new' %}" >
+            Add a partner to event
+    </a>
+</div>
 {% block scripts %}
     <script src = "{% static 'js/form_send_email.js' %}"></script>
 {% endblock %}

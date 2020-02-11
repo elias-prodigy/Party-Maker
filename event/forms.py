@@ -10,6 +10,6 @@ class EventForm(ModelForm):
             'event_description',
             'location_ev',
             'event_image',
-            'date',
+            'date'
         ]
 
