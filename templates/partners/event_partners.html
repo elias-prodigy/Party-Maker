@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+
 <form method="POST" id="for_partner_event_table" action="{% url 'event_partner_table' 0 %}" >{% csrf_token %}
     <div class="form-group" >
         <label for="main_choose_event">Event select</label>
@@ -19,8 +20,10 @@
         </select>
     </div>
 </form>
-{% render_table table %}
-<div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+
+        {% render_table table %}
+
+<div class="modal" id="PartnersOnEvent" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -31,25 +34,25 @@
       </div>
 
       <div class="modal-body">
-          <form method="POST" id="update_partner" class="post-form" action="">{% csrf_token %}
+          <form method="POST" id="update_partner_on_event" class="post-form" action="">{% csrf_token %}
                 <div class="form-group">
                     Name: <label>
-                    <input type="text" class="form-control mb-3" name="name">
+                    <input type="text" class="form-control mb-3" name="modal_name">
                 </label>
                 </div>
                 <div class="form-group">
                     Surname: <label>
-                    <input type="text" class="form-control mb-3" name="surname">
+                    <input type="text" class="form-control mb-3" name="modal_surname">
                 </label>
                 </div>
                 <div class="form-group">
                     Sponsor: <label>
-                    <input type="text" class="form-control mb-3" name="sponsor">
+                    <input type="text" class="form-control mb-3" name="modal_sponsor">
                 </label>
                 </div>
                 <div class="form-group">
                     Manager Name: <label>
-                    <input type="text" class="form-control mb-3" name="manager_name">
+                    <input type="text" class="form-control mb-3" name="modal_manager_name">
                 </label>
                 </div>
                 <div class="form-group">
@@ -65,7 +68,7 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="update" class="btn btn-primary">Save changes</button>
+        <button type="button" id="update_event_partner" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -73,14 +76,17 @@
 </div>
 
 <div>
-    <button type="button" id="send_ticket" class="btn btn-primary">
-            Send tickets
-    </button>
-    <a class="btn btn-primary add_partner" href="{% url 'partner_new' %}" >
+    <form id="send_ticket_form" action="{% url 'ticket-email' 0 %}">
+        <button type="button" id="send_ticket" class="btn btn-primary">
+                Send tickets
+        </button>
+    </form>
+    <button class="btn btn-primary" id="add_partner_to_event" href="{% url 'register-to-event' 1 %}" >
             Add a partner to event
-    </a>
+    </button>
 </div>
 {% block scripts %}
     <script src = "{% static 'js/form_send_email.js' %}"></script>
 {% endblock %}
+
 {% endblock content %}

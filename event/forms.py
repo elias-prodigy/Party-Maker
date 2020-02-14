@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from event.models import Event
+from event.models import Event, PartyRegPartners
 
 
 class EventForm(ModelForm):
