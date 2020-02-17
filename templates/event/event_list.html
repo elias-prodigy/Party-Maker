@@ -15,16 +15,14 @@
             </div>
 
       </div>
+    {% if user.is_authenticated %}
       <form action="{% url 'event-delete' event.id %}" method="post" style="display: inline;" >{% csrf_token %}
-<!--            <input type="hiden" name="event_id" value="{{event.id}}"/>-->
             <div align="right">
                 <button type="submit" class="save btn btn-success">Delete event</button>
             </div>
-                <span class="glyphicon glyphicon-trash"></span>
-            </button>
-
+            <span class="glyphicon glyphicon-trash"></span>
       </form>
-
+    {% endif %}
     </div>
 {% endfor %}
 {% endblock %}

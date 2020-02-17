@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from event.models import Event
+from event.models import Event, PartyRegPartners
 
 
 class EventForm(ModelForm):
@@ -10,6 +10,6 @@ class EventForm(ModelForm):
             'event_description',
             'location_ev',
             'event_image',
-            'date',
+            'date'
         ]
 

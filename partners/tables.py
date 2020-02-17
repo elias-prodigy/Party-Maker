@@ -1,4 +1,6 @@
-from django_tables2 import tables, TemplateColumn, LinkColumn, Column
+from django_tables2 import tables, TemplateColumn, LinkColumn, Column, CheckBoxColumn
+
+from event.models import PartyRegPartners
 from .models import Partners
 
 
@@ -19,3 +21,32 @@ class PartnerTable(tables.Table):
     class Meta:
         model = Partners
         fields = ['name', 'surname', 'email', 'sponsor', 'manager_name']
+
+
+class CheckBoxColumnWithName(CheckBoxColumn):
+    @property
+    def header(self):
+        return self.verbose_name
+
+
+class EventPartnerTable(tables.Table):
+
+    T3 = '<button type="button" class="btn btn-primary partner-event-update" data-toggle="modal" data-target="#PartnersOnEvent" ' \
+         'update_partner_on_event_link="{{ record.get_absolute_url_update_partner }}">Update</button>'
+    T4 = '<button type="button" class="btn js-delete" ' \
+         'delete-link="{{ record.partner.get_absolute_url_delete }}">Delete</button>'
+    edit = TemplateColumn(T3)
+    delete = TemplateColumn(T4)
+
+    name = Column(attrs={"td": {"class": "modal_name"}}, accessor="partner.name")
+    surname = Column(attrs={"td": {"class": "modal_surname"}}, accessor="partner.surname")
+    sponsor = Column(attrs={"td": {"class": "modal_sponsor"}}, accessor="partner.sponsor")
+    email = Column(attrs={"td": {"class": "modal_email"}}, accessor="partner.email")
+    manager_name = Column(attrs={"td": {"class": "modal_manager_name"}}, accessor="partner.manager_name")
+
+    manager_approve = CheckBoxColumnWithName(verbose_name="Manager approve", orderable="True", checked=lambda x, y: x)
+    CEO_approve = CheckBoxColumnWithName(verbose_name="CEO approve", orderable="True", checked=lambda x, y: x)
+
+    class Meta:
+        model = PartyRegPartners
+        fields = ['event', 'name', 'surname', 'email', 'sponsor', 'manager_name', 'manager_approve', 'CEO_approve']

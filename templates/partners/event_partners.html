@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_tables2 %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Partners registered to the party
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" id="for_partner_event_table" action="{% url 'event_partner_table' 0 %}" >{% csrf_token %}
+    <div class="form-group" >
+        <label for="main_choose_event">Event select</label>
+        <select class="form-control" id="main_choose_event">
+            <option>Choose your event</option>
+            {% for even in event %}
+              <option data-id-of-event="{{even.pk}}">{{even}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+
+{% render_table table %}
+
+<div class="modal" id="PartnersOnEvent" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit partner info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+          <form method="POST" id="update_partner_on_event" class="post-form" action="">{% csrf_token %}
+                <div class="form-group">
+                    Name: <label>
+                    <input type="text" class="form-control mb-3" name="modal_name">
+                </label>
+                </div>
+                <div class="form-group">
+                    Surname: <label>
+                    <input type="text" class="form-control mb-3" name="modal_surname">
+                </label>
+                </div>
+                <div class="form-group">
+                    Sponsor: <label>
+                    <input type="text" class="form-control mb-3" name="modal_sponsor">
+                </label>
+                </div>
+                <div class="form-group">
+                    Manager Name: <label>
+                    <input type="text" class="form-control mb-3" name="modal_manager_name">
+                </label>
+                </div>
+                <div class="form-group">
+                    Manager Approve: <label>
+                    <input type="checkbox" name="manager_approve" class="modal_manager_approve">
+                </label>
+                </div>
+                <div class="form-group">
+                    CEO Approve: <label>
+                    <input type="checkbox" name="CEO_approve"  class="modal_CEO_approve">
+                </label>
+                </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="update_event_partner" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+    <form id="send_ticket_form" action="{% url 'ticket-email' 0 %}">
+        <button type="button" id="send_ticket" class="btn btn-primary">
+                Send tickets
+        </button>
+    </form>
+    <br>
+    <button class="btn btn-primary" id="add_partner_to_event" href="{% url 'register-to-event' 1 %}" >
+            Add a partner to event
+    </button>
+</div>
+{% block scripts %}
+    <script src = "{% static 'js/form_send_email.js' %}"></script>
+{% endblock %}
+
+{% endblock content %}

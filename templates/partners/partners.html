@@ -8,18 +8,17 @@
 {% endblock %}
 
 {% block content %}
-
-<div class="form-group" >
-    <label for="chouseEvent">Event select</label>
-    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
-        <option>Choose your event</option>
-        {% for even in event %}
-          <option data-event-id="{{even.pk}}">{{even}}</option>
-        {% endfor %}
-    </select>
-</div>
-
-{#{% else %}    #}
+<form method="POST" id="for_partner_event_table" action="{% url 'event_partner_table' 0 %}" >{% csrf_token %}
+    <div class="form-group" >
+        <label for="main_choose_event">Event select</label>
+        <select class="form-control" id="main_choose_event">
+            <option>Choose your event</option>
+            {% for even in event %}
+              <option data-id-of-event="{{even.pk}}">{{even}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
 {% render_table table %}
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -56,7 +55,7 @@
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary save">Save changes</button>
+        <button type="button" id="update" class="btn btn-primary">Save changes</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -67,17 +66,18 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalCenterTitle">Choes event for email</h5>
+            <h5 class="modal-title" id="exampleModalCenterTitle">Choose event for email</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-              <form method="POST" id="for_mail" class="post-form" action="{% url 'send-email' 0 %}" >{% csrf_token %}
+              <form id="for_mail" action="{% url 'send-email' 0 %}">
+                  {% csrf_token %}
                 <div class="form-group" >
                     <label for="chouseEvent">Event select</label>
-                    <select class="form-control" id="chouseEvent" onchange='myFunction()'>
-                        <option>choose your event</option>
+                    <select class="form-control" id="chouseEvent">
+                        <option>Choose your event</option>
                         {% for even in event %}
                           <option data-event-id="{{even.pk}}">{{even}}</option>
                         {% endfor %}
@@ -87,7 +87,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" id="send_m" class="save btn btn-success" data-dismiss="modal">Send email</button>
+            <button type="button" id="send_m" class="btn btn-success" data-dismiss="modal">Send email</button>
           </div>
         </div>
       </div>
@@ -96,9 +96,6 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
             Send email to partners
         </button>
-        <a class="btn btn-primary" href="{% url 'partner_new' %}" >
-            Create new partner
-        </a>
     </div>
 </div>
 
