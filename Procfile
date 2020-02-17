@@ -1,0 +1,1 @@
+web: gunicorn Party-maker.wsgi --log-file -
