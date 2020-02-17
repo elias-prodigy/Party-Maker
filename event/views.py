@@ -66,28 +66,30 @@ class EventSendEmail(View):
 class TicketSendEmail(View):
     def post(self, request, **kwargs):
         event = get_object_or_404(Event, **kwargs)
-        partners = Partners.objects.all()
+        partners = PartyRegPartners.objects.filter(event_id=event.id)
 
         for partner in partners:
-            context = {
-                "partner": partner,
-                "event": event,
-                "event_id": event.pk,
-                "site_url": get_current_site(request)
-            }
-            html_data = render_to_string(
-                'event/emails/event_ticket.html',
-                context=context
-            )
-            plain_message = strip_tags(html_data)
-            send_mail(
-                event.event_name,
-                plain_message,
-                settings.EMAIL_HOST_USER,
-                [partner.email],
-                html_message=html_data,
-                fail_silently=False,
-            )
+            if partner.manager_approve and partner.CEO_approve:
+                print(partner.partner.email)
+                context = {
+                    "partner": partner,
+                    "event": event,
+                    "event_id": event.pk,
+                    "site_url": get_current_site(request)
+                }
+                html_data = render_to_string(
+                    'event/emails/event_ticket.html',
+                    context=context
+                )
+                plain_message = strip_tags(html_data)
+                send_mail(
+                    event.event_name,
+                    plain_message,
+                    settings.EMAIL_HOST_USER,
+                    [partner.partner.email],
+                    html_message=html_data,
+                    fail_silently=False,
+                )
         return HttpResponse()
 
 

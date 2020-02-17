@@ -21,7 +21,7 @@
     </div>
 </form>
 
-        {% render_table table %}
+{% render_table table %}
 
 <div class="modal" id="PartnersOnEvent" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -57,12 +57,12 @@
                 </div>
                 <div class="form-group">
                     Manager Approve: <label>
-                    <input type="checkbox" name="modal_manager_approve">
+                    <input type="checkbox" name="manager_approve" class="modal_manager_approve">
                 </label>
                 </div>
                 <div class="form-group">
                     CEO Approve: <label>
-                    <input type="checkbox" name="modal_CEO_approve">
+                    <input type="checkbox" name="CEO_approve"  class="modal_CEO_approve">
                 </label>
                 </div>
           </form>
@@ -81,6 +81,7 @@
                 Send tickets
         </button>
     </form>
+    <br>
     <button class="btn btn-primary" id="add_partner_to_event" href="{% url 'register-to-event' 1 %}" >
             Add a partner to event
     </button>

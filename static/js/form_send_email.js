@@ -18,19 +18,16 @@ function myFunction(){
 
 
 function SendTicketFunction(){
-    var CEO_approve = $('input[name="CEO_approve"]').val();
-    var manager_approve = $('input[name="manager_approve"]').val();
     var x = window.location.pathname.replace(/[^0-9]/gim,'')
     var act = $('#send_ticket_form').attr('action').replace("0",x);
     var csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    if (CEO_approve=="True" && manager_approve=="True") {
-            $.ajax({
-                url: act,
-                type: 'POST',
-                data: {},
-                headers: {'X-CSRFToken': csrftoken},
-                });
-    } else {alert('You need to update the partners')}
+    $.ajax({
+        url: act,
+        type: 'POST',
+        data: {},
+        headers: {'X-CSRFToken': csrftoken},
+    });
+
 };
 
 
@@ -96,16 +93,16 @@ $(document).ready(function(){
       var manager_name = $(this).parents('tr').find('td[class="modal_manager_name"]').text();
       $('input[name="modal_manager_name"]').val(manager_name);
 
-      var manager_approve = $(this).parents('tr').find('td[class="manager_approve"]').text();
-      manager_approve = $('input[name="modal_manager_approve"]').val(manager_approve);
+      var manager_approve = $(this).parents('tr').find('input[name="manager_approve"]').val();
+      var is_checked = $(this).parents('tr').find('input[name="manager_approve"]').prop("checked")
+      $('input[class="modal_manager_approve"]').val(manager_approve);
+      $('input[class="modal_manager_approve"]').prop("checked", is_checked)
 
 
       var CEO_approve = $(this).parents('tr').find('input[name="CEO_approve"]').val();
-      if (CEO_approve = "True") {
-        $('select[id="modal_CEO_approve"]').val(CEO_approve)
-      } else if (CEO_approve = "False") {
-        $('select[id="modal_CEO_approve"]').val(CEO_approve)
-      };
+      is_checked = $(this).parents('tr').find('input[name="CEO_approve"]').prop("checked")
+      $('input[class="modal_CEO_approve"]').val(CEO_approve)
+      $('input[class="modal_CEO_approve"]').prop("checked", is_checked)
 
 
       var partner_on_event_url = $(this).attr('update_partner_on_event_link');
@@ -115,9 +112,13 @@ $(document).ready(function(){
     $('#update_partner_on_event').on('submit', function (event1) {
       event1.preventDefault();
        $.ajax({
+            headers: { "X-CSRFToken": token },
             type: 'POST',
             url: $(this).attr('action'),
-            data: $(this).serialize(),
+            data: {
+                "manager_approve": $(this).find("input[name=manager_approve]").prop("checked"),
+                "CEO_approve": $(this).find("input[name=CEO_approve]").prop("checked")
+            },
             success: function () {
                 location.reload();
             }

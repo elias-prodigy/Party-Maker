@@ -44,10 +44,8 @@ class EventPartnerTable(tables.Table):
     email = Column(attrs={"td": {"class": "modal_email"}}, accessor="partner.email")
     manager_name = Column(attrs={"td": {"class": "modal_manager_name"}}, accessor="partner.manager_name")
 
-    manager_approve = CheckBoxColumnWithName(verbose_name="Manager approve", orderable="True")
-    CEO_approve = CheckBoxColumnWithName(verbose_name="CEO approve", orderable="True")
-    # manager_approve = TemplateColumn('<input type="checkbox" id="{{ record.id }}" value="{{ record.manager_approve }}" />', verbose_name="Manager approve")
-    # CEO_approve = TemplateColumn('<input type="checkbox" id="{{ record.id }}" value="{{ record.CEO_approve }}" />', verbose_name="CEO approve")
+    manager_approve = CheckBoxColumnWithName(verbose_name="Manager approve", orderable="True", checked=lambda x, y: x)
+    CEO_approve = CheckBoxColumnWithName(verbose_name="CEO approve", orderable="True", checked=lambda x, y: x)
 
     class Meta:
         model = PartyRegPartners
