@@ -1,1 +1,1 @@
-web: gunicorn Party-maker.wsgi --log-file -
+web: gunicorn Party_maker.wsgi --log-file -

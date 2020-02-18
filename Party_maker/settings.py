@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')0zjuv==#0x^95q83zy_0q#*qt%^h20)y!3cw9=00e==tek929'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.linkedin.LinkedinOAuth2',
@@ -33,7 +33,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-ALLOWED_HOSTS = ['light-party-maker.herokuapp.com']
+ALLOWED_HOSTS = ['light-party-maker.herokuapp.com', '127.0.0.1']
 AUTH_USER_MODEL = 'users.User'
 # Application definition
 INSTALLED_APPS = [
@@ -153,7 +153,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOCATION_FIELD = {
     'map.provider': 'openstreetmap',

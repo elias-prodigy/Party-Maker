@@ -20,7 +20,6 @@ from .models import Event, Partners, PartyRegPartners
 
 class EventList(ListView):
     model = Event
-    paginate_by = 100
 
 
 class CreateEvent(CreateView):
