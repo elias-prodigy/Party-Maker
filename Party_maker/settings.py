@@ -12,12 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-import DATABASES as DATABASES
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -28,8 +26,6 @@ SECRET_KEY = ')0zjuv==#0x^95q83zy_0q#*qt%^h20)y!3cw9=00e==tek929'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
-
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.linkedin.LinkedinOAuth2',
     'social_core.backends.instagram.InstagramOAuth2',
@@ -37,6 +33,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+ALLOWED_HOSTS = ['myapplication.herokuapp.com']
 AUTH_USER_MODEL = 'users.User'
 # Application definition
 INSTALLED_APPS = [
@@ -65,6 +62,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,7 +70,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Party_maker.urls'
@@ -98,13 +95,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Party_maker.wsgi.application'
 
-
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 
 DATABASES = {
     'default': {
@@ -116,7 +109,6 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -136,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -150,10 +141,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
@@ -161,6 +152,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOCATION_FIELD = {
     'map.provider': 'openstreetmap',
@@ -179,3 +172,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'LastaYaya@gmail.com'
 EMAIL_HOST_PASSWORD = 'LastFm22'
 EMAIL_PORT = 587
+
+prod_db = dj_database_url.config(conn_max_age=500)
+
+DATABASES['default'].update(prod_db)
