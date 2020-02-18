@@ -33,7 +33,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-ALLOWED_HOSTS = ['myapplication.herokuapp.com']
+ALLOWED_HOSTS = ['light-party-maker.herokuapp.com']
 AUTH_USER_MODEL = 'users.User'
 # Application definition
 INSTALLED_APPS = [
